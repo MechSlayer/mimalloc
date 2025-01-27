@@ -34,6 +34,7 @@ option(MI_NO_PADDING        "Force no use of padding even in DEBUG mode etc." OF
 option(MI_INSTALL_TOPLEVEL  "Install directly into $CMAKE_INSTALL_PREFIX instead of PREFIX/lib/mimalloc-version" OFF)
 option(MI_NO_THP            "Disable transparent huge pages support on Linux/Android for the mimalloc process only" OFF)
 option(MI_EXTRA_CPPDEFS     "Extra pre-processor definitions (use as `-DMI_EXTRA_CPPDEFS=\"opt1=val1;opt2=val2\"`)" "")
+option(MI_NO_PRIM_SELECTION "Disables automatic selection of portability primitives" OFF)
 
 # negated options for vcpkg features
 option(MI_NO_USE_CXX        "Use plain C compilation (has priority over MI_USE_CXX)" OFF)
@@ -144,6 +145,10 @@ if(CMAKE_BUILD_TYPE MATCHES "Release|RelWithDebInfo")
   endif()
 else()
   set(MI_OPT_ARCH OFF)
+endif()
+
+if(MI_NO_PRIM_SELECTION)
+  list(APPEND mi_defines MI_NO_PRIM_SELECTION)
 endif()
 
 if(MI_OVERRIDE)

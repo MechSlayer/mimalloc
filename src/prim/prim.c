@@ -8,6 +8,7 @@ terms of the MIT license. A copy of the license can be found in the file
 // Select the implementation of the primitives
 // depending on the OS.
 
+#if !defined(MI_NO_PRIM_SELECTION)
 #if defined(_WIN32)
 #include "windows/prim.c"  // VirtualAlloc (Windows)
 
@@ -24,6 +25,11 @@ terms of the MIT license. A copy of the license can be found in the file
 #else
 #include "unix/prim.c"     // mmap() (Linux, macOSX, BSD, Illumnos, Haiku, DragonFly, etc.)
 
+#endif
+#else
+#include <cstddef>
+extern void _mi_process_load();
+extern void _mi_process_done();
 #endif
 
 // Generic process initialization
